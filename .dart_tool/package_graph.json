@@ -42,6 +42,13 @@
       ]
     },
     {
+      "name": "flutter_colorpicker",
+      "version": "1.1.0",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
       "name": "cupertino_icons",
       "version": "1.0.8",
       "dependencies": []
@@ -225,13 +232,6 @@
       "name": "vm_service",
       "version": "15.0.2",
       "dependencies": []
-    },
-    {
-      "name": "flutter_colorpicker",
-      "version": "1.1.0",
-      "dependencies": [
-        "flutter"
-      ]
     }
   ],
   "configVersion": 1

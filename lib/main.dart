@@ -30,7 +30,7 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
 
   bool _isDarkMode = false; 
   Color _textColor = Colors.blue; 
-  bool showFrame = false;
+  bool _showFrame = false;
 
   void toggleVisibility() {
     setState(() {
@@ -79,11 +79,15 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
       backgroundColor: _isDarkMode ? Colors.grey[900] : Colors.amber,
       appBar: AppBar(
         title: const Text('Fading Text Animation'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: Icon(_isDarkMode ? Icons.wb_sunny: Icons.nightlight_round),
-            onPressed: toggleMode),
-          // TODO: Add color palette icon button to open color picker
+            onPressed: toggleMode), 
+          IconButton(
+            icon: const Icon(Icons.palette), 
+            onPressed: _showColorPicker
+            ),
         ],
       ),
       body: GestureDetector(
@@ -105,18 +109,39 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
                 opacity: _isVisible ? 1.0 : 0.0,
                 duration: const Duration(seconds: 1),
                 curve: Curves.easeInOut,
-                child: const Text(
+                child: Text(
                   'Hello, Flutter!',
-                  style: TextStyle(fontSize: 24),
-                  // TODO: Update text color based on selected color
+                  style: TextStyle(fontSize: 24, color: _textColor,),
                 ),
               ),
               const SizedBox(height: 40),
-              // TODO: Add Container with image
-              // TODO: Add BoxDecoration with border when showFrame is true
-              // TODO: Add ClipRRect for rounded corners
-              const SizedBox(height: 20),
-              // TODO: Add SwitchListTile to toggle frame on/off
+              Container(
+                decoration: _showFrame
+                  ? BoxDecoration(
+                      border: Border.all(color: Colors.blue, width: 4),
+                      borderRadius: BorderRadius.circular(20),
+                    )
+                  : null,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  'assets/gengar.jpg',
+                  width: 200,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SwitchListTile(
+              title: Text('Show Frame', style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+              value: _showFrame,
+              onChanged: (bool value) {
+                setState(() {
+                  _showFrame = value;
+                });
+              },
+            ),
             ],
           ),
         ),
@@ -168,15 +193,3 @@ class _SecondPageState extends State<SecondPage>{
       );
   }
 }
-
-
-
-
-
-
-
-// TODO: Create SecondScreen widget for the second fading animation
-// This screen should have:
-// - Different animation duration
-// - Similar fading effect
-// - AppBar with back navigation
