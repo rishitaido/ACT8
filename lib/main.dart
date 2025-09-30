@@ -55,7 +55,11 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
       appBar: AppBar(
         title: const Text('Fading Text Animation'),
         actions: [
+          
           // TODO: Add sun/moon icon button for day/night mode toggle
+          IconButton(
+            icon: Icon(_isDarkMode ? Icon.wb_sunny: Icons.nightlight_round),
+          ), 
           // TODO: Add color palette icon button to open color picker
         ],
       ),
