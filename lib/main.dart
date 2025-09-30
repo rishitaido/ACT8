@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +29,7 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
   bool _isVisible = true;
 
   bool _isDarkMode = false; 
-  Color textColor = Colors.blue; 
+  Color _textColor = Colors.blue; 
   bool showFrame = false;
 
   void toggleVisibility() {
@@ -46,6 +47,30 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
   }
 
   // TODO: Add method to open color picker dialog
+  void _showColorPicker() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Pick a color'),
+        content: SingleChildScrollView(
+          child: ColorPicker(
+            pickerColor: _textColor,
+            onColorChanged: (color) {
+              setState(() {
+                _textColor = color;
+              });
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Done'),
+          ),
+        ],
+      ),
+    );
+  }
    
 
   @override
