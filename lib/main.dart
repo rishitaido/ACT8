@@ -51,12 +51,10 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: Update backgroundColor based on day/night mode
+      backgroundColor: _isDarkMode ? Colors.grey[900] : Colors.amber,
       appBar: AppBar(
         title: const Text('Fading Text Animation'),
         actions: [
-          
-          // TODO: Add sun/moon icon button for day/night mode toggle
           IconButton(
             icon: Icon(_isDarkMode ? Icons.wb_sunny: Icons.nightlight_round),
             onPressed: toggleMode),
@@ -64,6 +62,14 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
         ],
       ),
       body: GestureDetector(
+        onHorizontalDragEnd: (details){
+          if (details.primaryVelocity! < 0){
+            Navigator.push(
+              context, 
+              MaterialPageRoute(builder: (context) => const SecondPage())
+              );
+          }
+        },
         // TODO: Add onHorizontalDragEnd to detect swipe gesture
         // Navigate to second screen when swiped
         child: Center(
@@ -97,6 +103,52 @@ class _FadingTextAnimationState extends State<FadingTextAnimation> {
     );
   }
 }
+
+class SecondPage extends StatefulWidget {
+  const SecondPage({Key? key}) : super(key: key);
+  @override
+  _SecondPageState createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage>{
+  bool _isVisible = true; 
+
+  void toggleVisibility(){
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+
+  @override 
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Second Animation"), 
+      ),
+      body: Center(
+        child: AnimatedOpacity(
+          opacity: _isVisible ? 1.0 : 0.0, 
+          duration: const Duration(seconds: 3), 
+          curve: Curves.easeInOut, 
+          child: const Text(
+            'Second Animation', 
+            style: TextStyle(fontSize: 24),
+            ),
+          ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: toggleVisibility, 
+        child: const Icon(Icons.play_arrow),
+      ),
+      );
+  }
+}
+
+
+
+
+
+
 
 // TODO: Create SecondScreen widget for the second fading animation
 // This screen should have:
